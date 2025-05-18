@@ -14,10 +14,11 @@ def save_data(videos):
         json.dump(videos,file)
 
 def list_videos(videos):
-
     print("==========================================")
+    print("   Name".ljust(13),'|'.ljust(10),"Link".ljust(15),'|'.ljust(5),'Duration(Hours)'.ljust(7))
+    print("-"*70)
     for i,value in enumerate(videos):
-        print(f"{i+1}. {value['name']}, link: {value['link'][:20]+'...' if len(value['link'])>20 else value['link']} , Duration : {value['time']}")
+        print(f"{i+1}. {value['name']:<15} {value['link'][:15]+'...' if len(value['link'])>15 else value['link']:<18} {value['time']:>15} ")
     print("==========================================")
     
 def add_videos(videos):
@@ -25,7 +26,6 @@ def add_videos(videos):
     link=input("Enter video link : ")
     length=int(input("Enter video length : "))
     videos.append({'name': name, 'link': link, 'time': length})
-
     save_data(videos)
 def update_videos(videos):
     list_videos(videos)
@@ -37,40 +37,63 @@ def update_videos(videos):
         print("3. Video Duration")
         print("4. All")
         print("5. Exit")
-        option=int(input("Enter your option"))
+        option=int(input("Enter your option : "))
         match option:
             case 1:
                 updated_name=input("Enter video name : ")
                 videos[choice-1]={'name': updated_name, 'link':videos[choice-1]['link'], 'time':videos[choice-1]['time']}
                 save_data(videos)
-                print("Video updated")
+                print("--------------------")
+                print("|","Video updated".rjust(10).ljust(10),"|")
+                print("--------------------")
             case 2:
                 updated_link=input("Enter video link : ")
                 videos[choice-1]={'name':videos[choice-1]['name'], 'link':updated_link, 'time':videos[choice-1]['time']}
                 save_data(videos)
-                print("Video updated")
+                print("--------------------")
+                print("|","Video updated".rjust(10).ljust(10),"|")
+                print("--------------------")
             case 3:
                 updated_time=int(input("Enter video duration : "))
                 videos[choice-1]={'name':videos[choice-1]['name'], 'link':videos[choice-1]['link'], 'time':updated_time}
                 save_data(videos)
-                print("Video updated")
+                print("--------------------")
+                print("|","Video updated".rjust(10).ljust(10),"|")
+                print("--------------------")
             case 4:
                 updated_name=input("Enter video name : ")
                 updated_link=input("Enter video link : ")
                 updated_time=int(input("Enter video duration : "))
                 videos[choice-1]={'name': updated_name, 'link':updated_link, 'time':updated_time}
                 save_data(videos)
-                print("Video updated")
+                print("--------------------")
+                print("|","Video updated".rjust(10).ljust(10),"|")
+                print("--------------------")
             case 5:
                 return
             case _:
-                print("Invalid option!")
+                print("--------------------")
+                print("|","Invalid option!".rjust(10).ljust(10),"|")
+                print("--------------------")
                 return
     else:
-        print("Please enter a valid number")
+        print("|","Please enter a valid number".rjust(10).ljust(10),"|")
 def delete_videos(videos):
-    pass
+    list_videos(videos)
+    index=int(input("Choose the number you want to delete : "))
+    if 1<=index<=len(videos):
+        del videos[index-1]
+        save_data(videos)
+        print("--------------------")
+        print("|","Video deleted".rjust(10).ljust(10),"|")
+        print("--------------------")
+    else:
+        print("--------------------")
+        print("|","Invalid input!".rjust(10).ljust(10),"|")
+        print("--------------------")
+        return
 def main():
+    print("|>>>--- Welcome to Youtube manager ---<<<| ")
     videos=load_data()
     while True:
         print("1. List all videos")
@@ -91,7 +114,9 @@ def main():
             case "5":
                 break
             case _:
-                print("Please enter a valid option")
+                print("--------------------")
+                print("|","Please enter a valid option".rjust(10).ljust(10),"|")
+                print("--------------------")
 
 if __name__=="__main__":
     main()
